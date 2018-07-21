@@ -1,0 +1,6 @@
+<design:component label="Set Map Size">
+	
+    <design:attribute name="width" label="width" description="Name of the person you want to greet" />
+    <design:attribute name="height" label="height" />
+
+</design:component>

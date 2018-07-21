@@ -1,0 +1,71 @@
+<aura:component >
+    <aura:attribute name="boat" type="Boat__c" default="{
+                                                        'Id':'a021N00000WsltOQAR',
+                                                        'Name':'Dipsy Doodle',
+                                                        'Contact__c':'0031N00001LsF5zQAF',
+                                                        'Picture__c':'/resource/Sailboats/sailboat1.png',
+                                                        'Length__c':20,'Price__c':100000,
+                                                        'Contact__r':
+                                                        {'Id':'0031N00001LsF5zQAF','Name':'Jamie Powell'},
+                                                        'BoatType__r':{'Id':'a011N00000ZM3c4QAD','Name':'Sailboat'}
+                                                        }"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="showFullDetailsButton" type="Boolean" default="false"/>
+
+    <div class="c-container">
+        <!-- -->
+        <lightning:card iconName="utility:anchor">
+            <aura:set attribute="title">
+                {!v.boat.Contact__r.Name}'s Boat
+            </aura:set>
+            
+                <!-- Lightning Layout -->
+            <aura:set attribute="actions">
+                <aura:if isTrue="{!v.showFullDetailsButton}">
+    <lightning:button label="Full Details" onclick="{!c.onFullDetails}"/>
+  </aura:if> 
+              
+            </aura:set>
+
+                
+                <lightning:layout horizontalAlign="space">
+                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                        <!-- column 1 .-->
+                        
+                        <div class="slds-p-horizontal--small">
+                            <div class="boatproperty">
+                                <span class="label">Boat Name:</span>
+                                <span></span>
+                            </div>
+                            <div class="boatproperty">
+                                
+                                <lightning:formattedNumber value="{!v.boat.Price__c}" style="currency" currencyCode="USD" />
+                               
+                            </div>
+                            <div class="boatproperty">
+                                <span class="label">Type:{!v.boat.BoatType__r.Name}</span>
+                                <span></span>
+                            </div>
+                            <div class="boatproperty">
+                                <span class="label">Length:{!v.boat.Length__c}</span>
+                                <span> ft</span>
+                            </div>
+                            <div class="boatproperty">
+                                <ui:outputRichText class="slds-text-longform" value="{!v.boat.Description__c}"/>
+                            </div>
+                        </div>
+                        
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                        <!-- column 2 .-->
+                        <div class="imageview"  style="{! 'height:200px;width:300px;background-image:url(\'' + v.boat.Picture__c + '\');'}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <!-- Lightning Layout--> 
+                
+            
+            
+        </lightning:card>
+    </div>      
+    
+</aura:component>

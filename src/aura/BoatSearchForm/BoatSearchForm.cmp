@@ -1,0 +1,29 @@
+<aura:component controller='BoatSearchController'>
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="showNewButton" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" /> 
+    
+    <aura:handler name="newBoatEvent" event="c:newBoatEvent" action="{!c.createNewBoat}"/>
+    <aura:registerEvent name="newBoatEvent" type="c:newBoatEvent"/>
+    <aura:registerEvent name="FormSubmit" type="c:FormSubmit"/>
+    <lightning:layout horizontalAlign="center"  verticalAlign="center">
+        <lightning:layoutItem padding="around-small">
+            <!-- Dropdown-->
+            <lightning:select name="mySelect" label="" aura:id="mySelect" value="{!v.selectedValue}" variant="label-hidden">
+                <aura:iteration items="{!v.options}" var="item">
+                    <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>
+                </aura:iteration>
+            </lightning:select>
+            <!-- Dropdown-->
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small">
+            <lightning:button label="Search" variant="brand" onclick="{!c.onFormSubmit}"/>
+            <aura:if isTrue="{!v.showNewButton}">
+                <lightning:button label="New" onclick="{!c.handleClick}"/>
+            </aura:if>  
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small">
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

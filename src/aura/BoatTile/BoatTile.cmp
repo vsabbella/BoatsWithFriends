@@ -1,0 +1,19 @@
+<aura:component >
+    <aura:attribute name="selected" type="Boolean" default="true"/>
+    <aura:attribute name="boat" type="Boat__c" default="{Contact__r: {Name:'ContactFirstName'}, Picture__c : '/resource/Sailboats/sailboat1.png'}"/>
+    <aura:registerEvent name="BoatSelect" type="c:BoatSelect"/>
+    <aura:registerEvent name="BoatSelected" type="c:BoatSelected"/>
+    <aura:registerEvent name="plotMapMarker" type="c:PlotMapMarker"/>
+    <div class='slds-m-around_medium'>
+        
+                <div><lightning:button class="{!v.selected? 'tile selected' : 'tile'}" onclick="{!c.onBoatClick}">
+                    <div style="{! 'background-image:url(\'' + v.boat.Picture__c + '\'); '}" class="innertile"> 
+                        <div class="lower-third">
+                            <h1 class="slds-truncate">{!v.boat.Contact__r.Name}</h1>
+                        </div>
+                    </div>
+                    </lightning:button></div>
+    </div>
+    
+    
+</aura:component>

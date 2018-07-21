@@ -1,0 +1,77 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    
+    
+    
+    <aura:attribute name="id" type="Id" />
+    <aura:attribute name="boat" type="Boat__c" default="{
+                                                        'Id':'a021N00000WsltOQAR',
+                                                        'Name':'Dipsy Doodle',
+                                                        'Contact__c':'0031N00001LsF5zQAF',
+                                                        'Picture__c':'/resource/Sailboats/sailboat1.png',
+                                                        'Length__c':20,'Price__c':100000,
+                                                        'Contact__r':
+                                                        {'Id':'0031N00001LsF5zQAF','Name':'Jamie Powell'},
+                                                        'BoatType__r':{'Id':'a011N00000ZM3c4QAD','Name':'Sailboat'}
+                                                        }"/>
+    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="selectedtabId" type="String" default="boatDetails"/>
+    
+    <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>    
+    <aura:handler name="BoatReviewAdded" event="c:BoatReviewAdded" action="{!c.onBoatReviewAdded}" includeFacets="true"/>   
+    
+    <aura:registerEvent name="PlotMapMarker" type="c:PlotMapMarker"/>
+    <!-- force:RecordData-->
+    
+    
+    
+    
+    <force:recordData aura:id="service"
+                      recordId="{!v.id}"
+                      mode="VIEW"
+                      fields="Id,
+                              Name,
+                              Description__c,
+                              Price__c,
+                              Length__c,
+                              Geolocation__Latitude__s,
+                              Geolocation__Longitude__s,
+                              Contact__r.Name,
+                              Contact__r.Email,
+                              Contact__r.HomePhone,
+                              BoatType__r.Name,
+                              Picture__c"
+                      targetFields="{!v.boat}"
+                      layoutType="FULL"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.onRecordUpdated}"
+                      /> 
+    <!-- force:RecordData-->
+    <lightning:tabset selectedTabId="{!v.selectedtabId}">
+        
+        <lightning:tab label="Details" id="boatDetails">
+            
+            <aura:if isTrue="{! v.boat!=undefined?true:false}">
+                <c:BoatDetail boat="{!v.boat}" /> 
+                <aura:set attribute="else">
+                    Error Displaying the boat details
+                </aura:set>
+            </aura:if>
+            
+        </lightning:tab>
+        <lightning:tab label="Reviews" id="boatreviewtab">
+            <c:BoatReviews aura:id="boatReviewsid"/>
+        </lightning:tab>
+        <lightning:tab label="Add Review" id="addAReview">
+            <c:AddBoatReview boat="{!v.boat}" />
+        </lightning:tab>
+    </lightning:tabset>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</aura:component>

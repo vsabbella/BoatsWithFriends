@@ -1,0 +1,78 @@
+<aura:component controller="BoatReviews">
+    <aura:attribute name="boat" type="Boat__c" Access="Public" default="{Id:'a021N00000WslwjQAB'}"/>
+    <aura:attribute name="boatReviews" type="BoatReview__c[]" Access="Private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="refresh" action="{!c.doInit}" 
+                 description="Sample method with parameters" > 
+    </aura:method>
+    <aura:handler name="change" value="{!v.boat}" action="{!c.onBoatChange}"/>
+    
+    <aura:if isTrue="{! !empty(v.boatReviews)? true:false  }">
+        
+        <div class="mainWrap">
+            <ui:scrollerWrapper class="sWrapTest">
+                <aura:iteration items="{!v.boatReviews}" var="boatReview">
+                    <div class="slds-feed">
+                        <ul class="slds-feed__list">
+                            <li class="slds-feed__item">
+                                <article class="slds-post">
+                                    <header class="slds-post__header slds-media">
+                                        <div class="slds-media__figure">
+                                            <a href="javascript:void(0);" class="slds-avatar slds-avatar_circle slds-avatar_large">
+                                                <img alt="Jason Rodgers" src="{! boatReview.CreatedBy.SmallPhotoUrl}" title="Jason Rodgers avatar" />
+                                            </a>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            
+                                            <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                <p><a href="javascript:void(0);" title="Jason Rodgers" onclick="{!c.onUserInfoClick}" data-userid= "{!boatReview.CreatedBy.Id}">{! boatReview.CreatedBy.Name}</a> — <a href="javascript:void(0);" title="Design Systems" >
+                                                    {! boatReview.CreatedBy.CompanyName}
+                                                    
+                                                    </a>
+                                                </p>
+                                                <!--<button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-x-small"
+                                                    aria-haspopup="true" title="More Options">
+                                                
+                                                <span class="slds-assistive-text">More Options</span>
+                                            </button> -->
+                                            </div>
+                                            <p class="slds-text-body_small"><a href="javascript:void(0);" title="Click for single-item view of this post" class="slds-text-link_reset">
+                                                
+                                                <p><lightning:formattedDateTime value="{! boatReview.LastModifiedDate}"
+                                                                                year="numeric" month="short" day="numeric" 
+                                                                                hour="2-digit" minute="2-digit" hour12="true"/></p>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </header>
+                                    <div class="slds-post__content slds-text-longform">
+                                        <p>  <h1>{! boatReview.Name}</h1>
+                                            <h2>{! boatReview.Comment__c}</h2>                                            
+                                        </p>
+                                        <p>
+                                            
+                                            
+                                        </p>
+                                    </div>
+                                    <footer class="slds-post__footer">
+                                        <ul class="slds-post__footer-actions-list slds-list_horizontal">
+                                            <li class="slds-col slds-item slds-m-right_medium">
+                                                <c:FiveStarRating aura:id="FiveStarRating" value="{! boatReview.Rating__c}" readonly="true"/>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </footer> 
+                                </article>
+                            </li>
+                        </ul>
+                    </div>
+                </aura:iteration>
+            </ui:scrollerWrapper>
+        </div>
+        <aura:set attribute="else">
+            <div class="slds-align_absolute-center" style="height: 5rem;">No reviews available</div>
+            
+        </aura:set>
+    </aura:if> 
+</aura:component>
